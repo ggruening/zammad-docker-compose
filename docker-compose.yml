@@ -19,6 +19,8 @@ services:
     volumes:
       - zammad-backup:/var/tmp/zammad
       - zammad-data:/opt/zammad
+    networks:
+      zammad-network:
 
   zammad-elasticsearch:
     environment:
@@ -27,6 +29,8 @@ services:
     restart: ${RESTART}
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
+    networks:
+      zammad-network:
 
   zammad-init:
     command: ["zammad-init"]
@@ -41,11 +45,15 @@ services:
     restart: on-failure
     volumes:
       - zammad-data:/opt/zammad
+    networks:
+      zammad-network:
 
   zammad-memcached:
     command: memcached -m 256M
     image: memcached:1.6.10-alpine
     restart: ${RESTART}
+    networks:
+      zammad-network:
 
   zammad-nginx:
     command: ["zammad-nginx"]
@@ -57,6 +65,8 @@ services:
     restart: ${RESTART}
     volumes:
       - zammad-data:/opt/zammad
+    networks:
+      zammad-network:
 
   zammad-postgresql:
     environment:
@@ -66,6 +76,8 @@ services:
     restart: ${RESTART}
     volumes:
       - postgresql-data:/var/lib/postgresql/data
+    networks:
+      zammad-network:
 
   zammad-railsserver:
     command: ["zammad-railsserver"]
@@ -80,6 +92,8 @@ services:
     restart: ${RESTART}
     volumes:
       - zammad-data:/opt/zammad
+    networks:
+      zammad-network:
 
   zammad-redis:
     image: redis:6.2.5-alpine
@@ -98,6 +112,8 @@ services:
     restart: ${RESTART}
     volumes:
       - zammad-data:/opt/zammad
+    networks:
+      zammad-network:
 
   zammad-websocket:
     command: ["zammad-websocket"]
@@ -112,6 +128,11 @@ services:
     restart: ${RESTART}
     volumes:
       - zammad-data:/opt/zammad
+    networks:
+      zammad-network:
+
+networks:
+  zammad-network:
 
 volumes:
   elasticsearch-data:
