@@ -1,3 +1,7 @@
+---
+Experiment für eine Docker-Zammad-Umgebung, die einen Wechsel der Datenbank erlaubt. Die Doku fehlt noch.
+---
+
 # Welcome to Zammad
 
 Zammad is a web based open source helpdesk/ticket system with many features
