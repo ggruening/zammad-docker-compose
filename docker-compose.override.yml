@@ -9,11 +9,15 @@ services:
     networks:
       # add Traefik's network
       web:
+    environment:
+       - RAILS_TRUSTED_PROXIES=['127.0.0.1', '::1', 'traefik']
+       - NGINX_SERVER_SCHEME=https
     labels:
       - traefik.enable=true
       - traefik.docker.network=web
 
-      - traefik.http.routers.zammad-nginx-https.rule=Host(`ticket.test.teilerfremd.de`)
+#      - traefik.http.routers.zammad-nginx-https.rule=Host(`ticket.test.teilerfremd.de`)
+      - traefik.http.routers.zammad-nginx-https.rule=Host(`ticket.lhb-do.de`)
       - traefik.http.routers.zammad-nginx-https.entrypoints=websecure
       - traefik.http.routers.zammad-nginx-https.tls.certresolver=lets-encrypt
       - traefik.http.routers.zammad-nginx-https.tls=true
