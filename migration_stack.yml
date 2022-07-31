@@ -1,0 +1,38 @@
+---
+version: '3'
+
+services:
+  db-mysql:
+    image: mariadb:10.3
+    container_name: mariadb-tmpZammad
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: notSecureChangeMe
+      MYSQL_DATABASE: zammad
+      MYSQL_USER: zammad
+      MYSQL_PASSWORD: zammad
+    volumes:
+      - /tmp/data_backups/db-mysql_data:/var/lib/mysql
+      - ./containers/mariaDB:/etc/mysql/conf.d
+      - /tmp/data_backups:/tmp/backup
+
+  db-postgres:
+    build: containers/postgres-with-pgloader
+    container_name: postgres-tmpZammad
+    restart: unless-stopped
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+      - /tmp/data_backups:/tmp/backup
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASS}
+      
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 8083:8080
+
+volumes:
+  postgresql-data:
+    driver: local
