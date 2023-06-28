@@ -23,3 +23,8 @@ services:
       - traefik.http.routers.zammad-nginx-https.middlewares=DDoS-check@docker # Middelware im traefik-container definiert
       - traefik.http.routers.zammad-nginx-https.service=zammad-nginx
       - traefik.http.services.zammad-nginx.loadbalancer.server.port=8080
+
+networks:
+  web:
+    external: true
+
