@@ -24,7 +24,44 @@ services:
       - traefik.http.routers.zammad-nginx-https.service=zammad-nginx
       - traefik.http.services.zammad-nginx.loadbalancer.server.port=8080
 
+  zammad-backup:
+    networks:
+      zammad-network:
+
+  zammad-elasticsearch:
+    networks:
+      zammad-network:
+
+  zammad-init:
+    networks:
+      zammad-network:
+
+  zammad-redis:
+    networks:
+      zammad-network:
+
+  zammad-postgresql:
+    networks:
+      zammad-network:
+
+  zammad-railsserver:
+    networks:
+      zammad-network:
+
+  zammad-scheduler:
+    networks:
+      zammad-network:
+
+  zammad-websocket:
+    networks:
+      zammad-network:
+
+  zammad-memcached:
+    networks:
+      zammad-network:
+
 networks:
+  zammad-network:
   web:
     external: true
 
