@@ -19,15 +19,15 @@ services:
     image: postgres:${POSTGRES_VERSION}
     restart: ${RESTART}
     volumes:
-      - zammad-backup:/var/tmp/zammad
-      - zammad-var:/opt/zammad/var:ro
+      - ./volumes/zammad-backup:/var/tmp/zammad
+      - ./volumes/zammad-var:/opt/zammad/var:ro
       - ./scripts/backup.sh:/usr/local/bin/backup.sh:ro
 
   zammad-elasticsearch:
     image: bitnami/elasticsearch:${ELASTICSEARCH_VERSION}
     restart: ${RESTART}
     volumes:
-      - elasticsearch-data:/bitnami/elasticsearch/data
+      - ./volumes/elasticsearch-data:/bitnami/elasticsearch/data
 
   zammad-init:
     command: ["zammad-init"]
@@ -40,8 +40,8 @@ services:
     restart: on-failure
     user: 0:0
     volumes:
-      - zammad-config-nginx:/etc/nginx/sites-enabled
-      - zammad-var:/opt/zammad/var
+      - ./volumes/zammad-config-nginx:/etc/nginx/sites-enabled
+      - ./volumes/zammad-var:/opt/zammad/var
 
   zammad-memcached:
     command: memcached -m 256M
@@ -57,8 +57,8 @@ services:
     image: ${IMAGE_REPO}:${VERSION}
     restart: ${RESTART}
     volumes:
-      - zammad-config-nginx:/etc/nginx/sites-enabled:ro
-      - zammad-var:/opt/zammad/var:ro
+      - ./volumes/zammad-config-nginx:/etc/nginx/sites-enabled
+      - ./volumes/zammad-var:/opt/zammad/var:ro
 
   zammad-postgresql:
     environment:
@@ -68,7 +68,7 @@ services:
     image: postgres:${POSTGRES_VERSION}
     restart: ${RESTART}
     volumes:
-      - postgresql-data:/var/lib/postgresql/data
+      - ./volumes/postgresql-data:/var/lib/postgresql/data
 
   zammad-railsserver:
     command: ["zammad-railsserver"]
@@ -82,13 +82,13 @@ services:
     image: ${IMAGE_REPO}:${VERSION}
     restart: ${RESTART}
     volumes:
-      - zammad-var:/opt/zammad/var
+      - ./volumes/zammad-var:/opt/zammad/var
 
   zammad-redis:
     image: redis:${REDIS_VERSION}
     restart: ${RESTART}
     volumes:
-      - redis-data:/data
+      - ./volumes/redis-data:/data
 
   zammad-scheduler:
     command: ["zammad-scheduler"]
@@ -102,7 +102,7 @@ services:
     image: ${IMAGE_REPO}:${VERSION}
     restart: ${RESTART}
     volumes:
-      - zammad-var:/opt/zammad/var
+      - ./volumes/zammad-var:/opt/zammad/var
 
   zammad-websocket:
     command: ["zammad-websocket"]
@@ -116,18 +116,18 @@ services:
     image: ${IMAGE_REPO}:${VERSION}
     restart: ${RESTART}
     volumes:
-      - zammad-var:/opt/zammad/var
+      - ./volumes/zammad-var:/opt/zammad/var
 
-volumes:
-  elasticsearch-data:
-    driver: local
-  postgresql-data:
-    driver: local
-  redis-data:
-    driver: local
-  zammad-backup:
-    driver: local
-  zammad-config-nginx:
-    driver: local
-  zammad-var:
-    driver: local
+# volumes:
+#   elasticsearch-data:
+#     driver: local
+#   postgresql-data:
+#     driver: local
+#   redis-data:
+#     driver: local
+#   zammad-backup:
+#     driver: local
+#   zammad-config-nginx:
+#     driver: local
+#   zammad-var:
+#     driver: local
