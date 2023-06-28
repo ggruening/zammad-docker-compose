@@ -16,8 +16,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=web
-      - traefik.http.routers.zammad-nginx-https.rule=Host(`ticket.test.teilerfremd.de`)
-#      - traefik.http.routers.zammad-nginx-https.rule=Host(`ticket.lhb-do.de`)
+#      - traefik.http.routers.zammad-nginx-https.rule=Host(`ticket.test.teilerfremd.de`)
+      - traefik.http.routers.zammad-nginx-https.rule=Host(`ticket.lhb-do.de`)
       - traefik.http.routers.zammad-nginx-https.entrypoints=websecure
       - traefik.http.routers.zammad-nginx-https.tls.certresolver=lets-encrypt
       - traefik.http.routers.zammad-nginx-https.tls=true
